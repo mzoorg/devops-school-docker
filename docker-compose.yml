@@ -1,0 +1,30 @@
+version: '3.9'
+services:
+  db:
+    image: localhost:5000/mypostgres
+    networks:
+      - back
+
+  backend:
+    image: localhost:5000/myback
+    volumes:
+      - "./backend/docker_homework/lib_catalog:/usr/src/app/"
+    networks:
+      - back
+      - front
+    ports:
+      - "8000:8000"
+    depends_on:
+      - "db"
+
+  front:
+    image: localhost:5000/myfront_multi
+    networks: 
+      - front
+    ports:
+      - "3000:3000"
+
+networks:
+  front:
+  back:
+
